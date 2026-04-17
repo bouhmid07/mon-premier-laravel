@@ -1,16 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController; 
+use App\Http\Controllers\PageController;   
+use App\Http\Controllers\TaskController; 
  
 //controlleur
-Route::get('/', [PageController::class, 'home']); 
+//Route::get('/', [PageController::class, 'home']);  
+//Route::get('/about', [PageController::class, 'about']); 
  
-Route::get('/about', [PageController::class, 'about']); 
+//Route::get('/contact', [PageController::class, 'contact']); 
  
-Route::get('/contact', [PageController::class, 'contact']); 
- 
-Route::get('/services', [PageController::class, 'services']); 
+//Route::get('/services', [PageController::class, 'services']); 
 
 Route::get('/blog', function () {
 
@@ -33,9 +33,9 @@ Route::get('/blog', function () {
 });
 
 // Route 1 : Page d'accueil 
-Route::get('/', function () { 
-    return view('welcome'); 
-}); 
+//Route::get('/', function () { 
+   // return view('welcome'); 
+//}); 
 
 // Route 2 : Page À propos 
 //Route::get('/about', function () { 
@@ -81,9 +81,7 @@ Route::get('/produit/{id}', function ($id) {
 return "<h1>Produit #$id</h1>"; 
 })->where('id', '[0-9]+'); 
 
-Route::get('/home', function () { 
-    return view('home'); 
-}); 
+
  
 Route::get('/profil', function () { 
     return view('profil', [ 
@@ -137,3 +135,10 @@ Route::get('/equipe/{membre?}', function ($membre = null) {
 
 });
 
+
+// Redirige / vers la liste des tâches 
+Route::get('/', fn() => redirect()->route('tasks.index'));
+
+
+// Génère automatiquement les 7 routes CRUD 
+Route::resource('tasks', TaskController::class); 
